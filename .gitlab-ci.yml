@@ -1,0 +1,38 @@
+image: maven:3-jdk-8
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -noverify"
+  RD_TOKEN: $RD_TOKEN
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+stages:
+  - build
+  - deploy_artifactory
+
+mvn:build:
+  stage: build
+  script:
+    - echo "Maven snapshot build started."
+    - mvn $MAVEN_CLI_OPTS $MVN_OPTS package
+    - echo "Maven snapshot build completed."
+
+mvn:deploy_artifactory:
+  stage: deploy_artifactory
+  environment: develop
+  dependencies:
+    - mvn:build
+  script:
+    - mvn $MAVEN_CLI_OPTS $MVN_OPTS deploy
+    - echo "Deployed successfully to Artifactory."
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: manual
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: manual
