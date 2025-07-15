@@ -22,7 +22,7 @@ stages:
 mvn:build:
   stage: build
   script:
-    - echo "Maven snapshot build started."
+    - echo "Maven snapshot build started now."
     - mvn $MAVEN_CLI_OPTS $MVN_OPTS package
     - echo "Maven snapshot build completed."
 
