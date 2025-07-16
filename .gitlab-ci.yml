@@ -1,8 +1,13 @@
-image: maven:3-jdk-8
+image: maven:3.8.6-jdk-11
+
+default:
+  tags:
+    - java
+    - maven
 
 variables:
-  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -noverify"
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-noverify"
   RD_TOKEN: $RD_TOKEN
 
 cache:
@@ -17,7 +22,7 @@ stages:
 mvn:build:
   stage: build
   script:
-    - echo "Maven snapshot build started."
+    - echo "Maven snapshot build started now."
     - mvn $MAVEN_CLI_OPTS $MVN_OPTS package
     - echo "Maven snapshot build completed."
 
