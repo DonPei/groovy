@@ -1,96 +1,123 @@
-# Dispatcher configuration
+# Sample AEM project template
 
-This module contains the basic dispatcher configurations. The configuration gets bundled in a ZIP file,
-and can be downloaded and unzipped to a local folder for development.
+This is a project template for AEM-based applications. It is intended as a best-practice set of examples as well as a potential starting point to develop your own functionality.
 
-## File Structure
+## Modules
 
-```
-./
-├── conf.d
-│   ├── available_vhosts
-│   │   └── default.vhost
-│   ├── dispatcher_vhost.conf
-│   ├── enabled_vhosts
-│   │   ├── README
-│   │   └── default.vhost -> ../available_vhosts/default.vhost
-│   └── rewrites
-│   │   ├── default_rewrite.rules
-│   │   └── rewrite.rules
-│   └── variables
-│       └── custom.vars
-└── conf.dispatcher.d
-    ├── available_farms
-    │   └── default.farm
-    ├── cache
-    │   ├── default_invalidate.any
-    │   ├── default_rules.any
-    │   └── rules.any
-    ├── clientheaders
-    │   ├── clientheaders.any
-    │   └── default_clientheaders.any
-    ├── dispatcher.any
-    ├── enabled_farms
-    │   ├── README
-    │   └── default.farm -> ../available_farms/default.farm
-    ├── filters
-    │   ├── default_filters.any
-    │   └── filters.any
-    ├── renders
-    │   └── default_renders.any
-    └── virtualhosts
-        ├── default_virtualhosts.any
-        └── virtualhosts.any
-```
+The main parts of the template are:
 
-## Files Explained
+* [core:](core/README.md) Java bundle containing all core functionality like OSGi services, listeners or schedulers, as well as component-related Java code such as servlets or request filters.
+* [it.tests:](it.tests/README.md) Java based integration tests
+* [ui.apps:](ui.apps/README.md) contains the /apps (and /etc) parts of the project, ie JS&CSS clientlibs, components, and templates
+* [ui.content:](ui.content/README.md) contains sample content using the components from the ui.apps
+* ui.config: contains runmode specific OSGi configs for the project
+* [ui.frontend:](ui.frontend.general/README.md) an optional dedicated front-end build mechanism (Angular, React or general Webpack project)
+* [ui.tests.cypress:](ui.tests.cypress/README.md) Cypress based UI tests
+* [ui.tests.wdio:](ui.tests.wdio/README.md) Selenium based UI tests
+* all: a single content package that embeds all of the compiled modules (bundles and content packages) including any vendor dependencies
+* analyse: this module runs analysis on the project which provides additional validation for deploying into AEMaaCS
 
-- `conf.d/available_vhosts/default.vhost`
-  - `*.vhost` (Virtual Host) files are included from inside the `dispatcher_vhost.conf`. These are `<VirtualHosts>` entries to match host names and allow Apache to handle each domain traffic with different rules. From the `*.vhost` file, other files like rewrites, white listing, etc. will be included. The `available_vhosts` directory is where the `*.vhost` files are stored and `enabled_vhosts` directory is where you enable Virtual Hosts by using a symbolic link from a file in the `available_vhosts` to the `enabled_vhosts` directory.
+## How to build
 
-- `conf.d/rewrites/rewrite.rules`
-  - `rewrite.rules` file is included from inside the `conf.d/enabled_vhosts/*.vhost` files. It has a set of rewrite rules for `mod_rewrite`.
+To build all the modules run in the project root directory the following command with Maven 3:
 
-- `conf.d/variables/custom.vars`
-  - `custom.vars` file is included from inside the `conf.d/enabled_vhosts/*.vhost` files. You can put your Apache variables in there.
+    mvn clean install
 
-- `conf.dispatcher.d/available_farms/<CUSTOMER_CHOICE>.farm`
-  - `*.farm` files are included inside the `conf.dispatcher.d/dispatcher.any` file. These parent farm files exist to control module behavior for each render or website type. Files are created in the `available_farms` directory and enabled with a symbolic link into the `enabled_farms` directory. 
+To build all the modules and deploy the `all` package to a local instance of AEM, run in the project root directory the following command:
 
-- `conf.dispatcher.d/filters/filters.any`
-  - `filters.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It has a set of rules change what traffic should be filtered out and not make it to the backend.
+    mvn clean install -PautoInstallSinglePackage
 
-- `conf.dispatcher.d/virtualhosts/virtualhosts.any`
-  - `virtualhosts.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It has a list of host names or URI paths to be matched by blob matching to determine which backend to use to serve that request.
+Or to deploy it to a publish instance, run
 
-- `conf.dispatcher.d/cache/rules.any`
-  - `rules.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It specifies caching preferences.
+    mvn clean install -PautoInstallSinglePackagePublish
 
-- `conf.dispatcher.d/clientheaders.any`
-  - `clientheaders.any` file is included inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It specifies which client headers should be passed through to each renderer.
+Or alternatively
 
-## Environment Variables
+    mvn clean install -PautoInstallSinglePackage -Daem.port=4503
 
-- `CONTENT_FOLDER_NAME`
-  - This is the customer's content folder in the repository. This is used in the `customer_rewrite.rules` to map shortened URLs to their correct repository path.  
+Or to deploy only the bundle to the author, run
 
-## Immutable Configuration Files
+    mvn clean install -PautoInstallBundle
 
-Some files are immutable, meaning they cannot be altered or deleted.  These are part of the base framework and enforce standards and best practices.  When customization is needed, copies of immutable files (i.e. `default.vhost` -> `publish.vhost`) can be used to modify the behavior.  Where possible, be sure to retain includes of immutable files unless customization of included files is also needed.
+Or to deploy only a single content package, run in the sub-module directory (i.e `ui.apps`)
 
-### Immutable Files
+    mvn clean install -PautoInstallPackage
 
-```
-conf.d/available_vhosts/default.vhost
-conf.d/dispatcher_vhost.conf
-conf.d/rewrites/default_rewrite.rules
-conf.dispatcher.d/available_farms/default.farm
-conf.dispatcher.d/cache/default_invalidate.any
-conf.dispatcher.d/cache/default_rules.any
-conf.dispatcher.d/clientheaders/default_clientheaders.any
-conf.dispatcher.d/dispatcher.any
-conf.dispatcher.d/enabled_farms/default.farm
-conf.dispatcher.d/filters/default_filters.any
-conf.dispatcher.d/renders/default_renders.any
-conf.dispatcher.d/virtualhosts/default_virtualhosts.any
-```
+## Documentation
+
+The build process also generates documentation in the form of README.md files in each module directory for easy reference. Depending on the options you select at build time, the content may be customized to your project.
+
+## Testing
+
+There are three levels of testing contained in the project:
+
+### Unit tests
+
+This show-cases classic unit testing of the code contained in the bundle. To
+test, execute:
+
+    mvn clean test
+
+### Integration tests
+
+This allows running integration tests that exercise the capabilities of AEM via
+HTTP calls to its API. To run the integration tests, run:
+
+    mvn clean verify -Plocal
+
+Test classes must be saved in the `src/main/java` directory (or any of its
+subdirectories), and must be contained in files matching the pattern `*IT.java`.
+
+The configuration provides sensible defaults for a typical local installation of
+AEM. If you want to point the integration tests to different AEM author and
+publish instances, you can use the following system properties via Maven's `-D`
+flag.
+
+| Property | Description | Default value |
+| --- | --- | --- |
+| `it.author.url` | URL of the author instance | `http://localhost:4502` |
+| `it.author.user` | Admin user for the author instance | `admin` |
+| `it.author.password` | Password of the admin user for the author instance | `admin` |
+| `it.publish.url` | URL of the publish instance | `http://localhost:4503` |
+| `it.publish.user` | Admin user for the publish instance | `admin` |
+| `it.publish.password` | Password of the admin user for the publish instance | `admin` |
+
+The integration tests in this archetype use the [AEM Testing
+Clients](https://github.com/adobe/aem-testing-clients) and showcase some
+recommended [best
+practices](https://github.com/adobe/aem-testing-clients/wiki/Best-practices) to
+be put in use when writing integration tests for AEM.
+
+## Static Analysis
+
+The `analyse` module performs static analysis on the project for deploying into AEMaaCS. It is automatically
+run when executing
+
+    mvn clean install
+
+from the project root directory. Additional information about this analysis and how to further configure it
+can be found here https://github.com/adobe/aemanalyser-maven-plugin
+
+### UI tests
+
+They will test the UI layer of your AEM application using either Cypress or Selenium technology.
+
+Check README file in `ui.tests.cypress` or `ui.tests.wdio` module for more details.
+
+## ClientLibs
+
+The frontend module is made available using an [AEM ClientLib](https://helpx.adobe.com/experience-manager/6-5/sites/developing/using/clientlibs.html). When executing the NPM build script, the app is built and the [`aem-clientlib-generator`](https://github.com/wcm-io-frontend/aem-clientlib-generator) package takes the resulting build output and transforms it into such a ClientLib.
+
+A ClientLib will consist of the following files and directories:
+
+- `css/`: CSS files which can be requested in the HTML
+- `css.txt` (tells AEM the order and names of files in `css/` so they can be merged)
+- `js/`: JavaScript files which can be requested in the HTML
+- `js.txt` (tells AEM the order and names of files in `js/` so they can be merged
+- `resources/`: Source maps, non-entrypoint code chunks (resulting from code splitting), static assets (e.g. icons), etc.
+
+## Maven settings
+
+The project comes with the auto-public repository configured. To setup the repository in your Maven settings, refer to:
+
+    http://helpx.adobe.com/experience-manager/kb/SetUpTheAdobeMavenRepository.html

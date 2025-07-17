@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Breadcrumb"
     sling:resourceSuperType="core/wcm/components/breadcrumb/v3/breadcrumb"
-    componentGroup="demo 1 - Content"/>
+    componentGroup="philanthropy campaign website - Content"/>

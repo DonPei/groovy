@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Table of Contents"
     sling:resourceSuperType="core/wcm/components/tableofcontents/v1/tableofcontents"
-    componentGroup="demo 1 - Content"/>
+    componentGroup="philanthropy campaign website - Content"/>

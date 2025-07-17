@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="PDF Viewer"
     sling:resourceSuperType="core/wcm/components/pdfviewer/v1/pdfviewer"
-    componentGroup="demo 1 - Content"/>
+    componentGroup="philanthropy campaign website - Content"/>

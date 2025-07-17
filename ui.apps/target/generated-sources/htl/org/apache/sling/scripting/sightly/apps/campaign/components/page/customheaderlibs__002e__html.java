@@ -41,7 +41,7 @@ out.write("\n    ");
 {
     Object var_templatevar0 = renderContext.getObjectModel().resolveProperty(_global_clientlib, "css");
     {
-        String var_templateoptions1_field$_categories = "demo1.base";
+        String var_templateoptions1_field$_categories = "campaign.base";
         {
             java.util.Map var_templateoptions1 = obj().with("categories", var_templateoptions1_field$_categories);
             callUnit(out, renderContext, var_templatevar0, var_templateoptions1);

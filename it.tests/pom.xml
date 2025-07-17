@@ -14,9 +14,7 @@
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -27,8 +25,8 @@
     </parent>
 
     <artifactId>campaign.it.tests</artifactId>
-    <name>demo 1 - Integration Tests</name>
-    <description>Integration Tests for demo 1</description>
+    <name>philanthropy campaign website - Integration Tests</name>
+    <description>Integration Tests for philanthropy campaign website</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -96,8 +94,7 @@
                                 <com.sun.security.enableAIAcaIssuers>true</com.sun.security.enableAIAcaIssuers>
                                 <it.logintokenauth>true</it.logintokenauth>
 
-                                <!-- Sling Testing Tools properties for configuring the test
-                                instances -->
+                                <!-- Sling Testing Tools properties for configuring the test instances -->
                                 <sling.it.instances>2</sling.it.instances>
 
                                 <!-- Author service -->

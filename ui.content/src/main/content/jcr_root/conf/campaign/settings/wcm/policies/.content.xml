@@ -3,7 +3,7 @@
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
     <rep:policy/>
-    <demo1 jcr:primaryType="nt:unstructured">
+    <campaign jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
             <form jcr:primaryType="nt:unstructured">
                 <container jcr:primaryType="nt:unstructured">
@@ -12,7 +12,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Content Form"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[/apps/demo1/components/form/button,/apps/demo1/components/form/hidden,/apps/demo1/components/form/options,/apps/demo1/components/form/text]">
+                        components="[/apps/campaign/components/form/button,/apps/campaign/components/form/hidden,/apps/campaign/components/form/options,/apps/campaign/components/form/text]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </form-container>
                 </container>
@@ -20,9 +20,9 @@
             <languagenavigation jcr:primaryType="nt:unstructured">
                 <policy_xfm
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="demo 1 Language Navigation - Experience Fragment"
+                    jcr:title="philanthropy campaign website Language Navigation - Experience Fragment"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    navigationRoot="/content/demo1"
+                    navigationRoot="/content/campaign"
                     structureDepth="1">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_xfm>
@@ -211,7 +211,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Page Root"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    components="[group:demo 1 - Content,/apps/demo1/components/form/container,group:demo 1 - Structure]">
+                    components="[group:philanthropy campaign website - Content,/apps/campaign/components/form/container,group:philanthropy campaign website - Structure]">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                     <cq:authoring jcr:primaryType="nt:unstructured">
                         <assetToComponentMapping jcr:primaryType="nt:unstructured">
@@ -220,19 +220,19 @@
                                 assetGroup="media"
                                 assetMimetype="image/*"
                                 droptarget="image"
-                                resourceType="demo1/components/image"/>
+                                resourceType="campaign/components/image"/>
                             <mapping_1575030843388
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="content"
                                 assetMimetype="text/html"
                                 droptarget="experiencefragment"
-                                resourceType="demo1/components/experiencefragment"/>
+                                resourceType="campaign/components/experiencefragment"/>
                             <mapping_1575030853128
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="media"
                                 assetMimetype="[text/html,application/vnd.adobe.contentfragment]"
                                 droptarget="contentfragment"
-                                resourceType="demo1/components/contentfragment"/>
+                                resourceType="campaign/components/contentfragment"/>
                         </assetToComponentMapping>
                     </cq:authoring>
                 </policy_1574694950110>
@@ -241,7 +241,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Page Content"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    components="[group:demo 1 - Content,/apps/demo1/components/form/container]">
+                    components="[group:philanthropy campaign website - Content,/apps/campaign/components/form/container]">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                     <cq:authoring jcr:primaryType="nt:unstructured">
                         <assetToComponentMapping jcr:primaryType="nt:unstructured">
@@ -250,19 +250,19 @@
                                 assetGroup="media"
                                 assetMimetype="image/*"
                                 droptarget="image"
-                                resourceType="demo1/components/image"/>
+                                resourceType="campaign/components/image"/>
                             <mapping_1575030260142
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="content"
                                 assetMimetype="text/html"
                                 droptarget="experiencefragment"
-                                resourceType="demo1/components/experiencefragment"/>
+                                resourceType="campaign/components/experiencefragment"/>
                             <mapping_1575030269139
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="media"
                                 assetMimetype="[text/html,application/vnd.adobe.contentfragment]"
                                 droptarget="contentfragment"
-                                resourceType="demo1/components/contentfragment"/>
+                                resourceType="campaign/components/contentfragment"/>
                         </assetToComponentMapping>
                     </cq:authoring>
                 </policy_1574695586800>
@@ -279,7 +279,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="XF Root"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    components="[group:demo 1 - Content,/apps/demo1/components/form/container]">
+                    components="[group:philanthropy campaign website - Content,/apps/campaign/components/form/container]">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                     <cq:authoring jcr:primaryType="nt:unstructured">
                         <assetToComponentMapping jcr:primaryType="nt:unstructured">
@@ -288,19 +288,19 @@
                                 assetGroup="media"
                                 assetMimetype="image/*"
                                 droptarget="image"
-                                resourceType="demo1/components/image"/>
+                                resourceType="campaign/components/image"/>
                             <mapping_1575030843388
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="content"
                                 assetMimetype="text/html"
                                 droptarget="experiencefragment"
-                                resourceType="demo1/components/experiencefragment"/>
+                                resourceType="campaign/components/experiencefragment"/>
                             <mapping_1575030853128
                                 jcr:primaryType="nt:unstructured"
                                 assetGroup="media"
                                 assetMimetype="[text/html,application/vnd.adobe.contentfragment]"
                                 droptarget="contentfragment"
-                                resourceType="demo1/components/contentfragment"/>
+                                resourceType="campaign/components/contentfragment"/>
                         </assetToComponentMapping>
                     </cq:authoring>
                 </policy_1575040440977>
@@ -335,13 +335,13 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Generic Page"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    clientlibs="[demo1.dependencies,demo1.site]"
-                    clientlibsJsHead="demo1.dependencies">
+                    clientlibs="[campaign.dependencies,campaign.site]"
+                    clientlibsJsHead="campaign.dependencies">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy>
             </page>
         </components>
-    </demo1>
+    </campaign>
     <wcm jcr:primaryType="nt:unstructured">
         <foundation jcr:primaryType="nt:unstructured">
             <components jcr:primaryType="nt:unstructured">

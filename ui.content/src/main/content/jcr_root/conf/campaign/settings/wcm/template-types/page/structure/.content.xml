@@ -3,20 +3,20 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[mobile/groups/responsive]"
-        cq:template="/conf/demo1/settings/wcm/templates/page-content"
+        cq:template="/conf/campaign/settings/wcm/templates/page-content"
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="demo1/components/page">
+        sling:resourceType="campaign/components/page">
         <root
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="demo1/components/container"
+            sling:resourceType="campaign/components/container"
             layout="responsiveGrid">
             <experiencefragment-header
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="demo1/components/experiencefragment"
-                fragmentVariationPath="/content/experience-fragments/demo1/us/en/site/header/master"/>
+                sling:resourceType="campaign/components/experiencefragment"
+                fragmentVariationPath="/content/experience-fragments/campaign/us/en/site/header/master"/>
             <container
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="demo1/components/container"
+                sling:resourceType="campaign/components/container"
                 editable="{Boolean}true"
                 layout="responsiveGrid"/>
         </root>

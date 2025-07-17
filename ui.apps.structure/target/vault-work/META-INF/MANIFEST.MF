@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Created-By: Apache Jackrabbit FileVault - Package Maven Plugin 1.3.6
 Build-Jdk-Spec: 11
-Implementation-Title: demo 1 - Repository Structure Package
+Implementation-Title: philanthropy campaign website - Repository Structu
+ re Package
 Implementation-Version: 1.0.0-SNAPSHOT
 Content-Package-Type: mixed
 Content-Package-Id: org.mdanderson.philanthropy:campaign.ui.apps.structu

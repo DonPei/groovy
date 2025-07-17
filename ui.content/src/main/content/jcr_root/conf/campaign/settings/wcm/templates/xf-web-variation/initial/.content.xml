@@ -3,13 +3,13 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:tags="[experience-fragments:variation/web]"
-        cq:template="/conf/demo1/settings/wcm/templates/xf-web-variation"
+        cq:template="/conf/campaign/settings/wcm/templates/xf-web-variation"
         cq:xfVariantType="web"
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="demo1/components/xfpage">
+        sling:resourceType="campaign/components/xfpage">
         <root
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="demo1/components/container"
+            sling:resourceType="campaign/components/container"
             layout="responsiveGrid"/>
     </jcr:content>
 </jcr:root>

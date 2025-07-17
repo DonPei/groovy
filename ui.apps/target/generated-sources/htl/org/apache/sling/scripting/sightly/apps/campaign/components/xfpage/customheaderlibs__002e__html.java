@@ -43,7 +43,7 @@ _global_clientlib = renderContext.call("use", "/libs/granite/sightly/templates/c
 {
     Object var_templatevar0 = renderContext.getObjectModel().resolveProperty(_global_clientlib, "js");
     {
-        String var_templateoptions1_field$_categories = "demo1.dependencies";
+        String var_templateoptions1_field$_categories = "campaign.dependencies";
         {
             java.util.Map var_templateoptions1 = obj().with("categories", var_templateoptions1_field$_categories);
             callUnit(out, renderContext, var_templatevar0, var_templateoptions1);
@@ -55,7 +55,7 @@ _global_clientlib = renderContext.call("use", "/libs/granite/sightly/templates/c
 {
     Object var_templatevar2 = renderContext.getObjectModel().resolveProperty(_global_clientlib, "css");
     {
-        String var_templateoptions3_field$_categories = "demo1.base";
+        String var_templateoptions3_field$_categories = "campaign.base";
         {
             java.util.Map var_templateoptions3 = obj().with("categories", var_templateoptions3_field$_categories);
             callUnit(out, renderContext, var_templatevar2, var_templateoptions3);

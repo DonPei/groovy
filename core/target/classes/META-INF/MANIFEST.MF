@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
-Bundle-Category: demo 1
-Bundle-Description: Core bundle for demo 1
+Bundle-Category: philanthropy campaign website
+Bundle-Description: Core bundle for philanthropy campaign website
 Bundle-ManifestVersion: 2
-Bundle-Name: demo 1 - Core
+Bundle-Name: philanthropy campaign website - Core
 Bundle-SymbolicName: campaign.core
 Bundle-Version: 1.0.0.SNAPSHOT
 Export-Package: org.mdanderson.philanthropy.core.filters;version="1.0"
@@ -15,7 +15,7 @@ Export-Package: org.mdanderson.philanthropy.core.filters;version="1.0"
  core.servlets;version="1.0";uses:="javax.servlet,org.apache.sling.api
  ,org.apache.sling.api.servlets"
 Import-Package: javax.annotation;version="0.0.0",com.day.cq.wcm.api;ve
- rsion="[1.32,2)",javax.servlet;version="[3.0,4)",org.apache.sling.api
+ rsion="[1.32,2)",javax.servlet;version="[3.1,4)",org.apache.sling.api
  ;version="[2.3,3)",org.apache.sling.api.request;version="[2.7,3)",org
  .apache.sling.api.resource;version="[2.13,3)",org.apache.sling.api.re
  source.observation;version="[1.2,2)",org.apache.sling.api.servlets;ve

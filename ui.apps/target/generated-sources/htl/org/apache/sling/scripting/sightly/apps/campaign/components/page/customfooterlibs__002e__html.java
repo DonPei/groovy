@@ -43,7 +43,7 @@ out.write("\n    ");
     {
         boolean var_templateoptions1_field$_async = true;
         {
-            String var_templateoptions1_field$_categories = "demo1.base";
+            String var_templateoptions1_field$_categories = "campaign.base";
             {
                 java.util.Map var_templateoptions1 = obj().with("async", var_templateoptions1_field$_async).with("categories", var_templateoptions1_field$_categories);
                 callUnit(out, renderContext, var_templatevar0, var_templateoptions1);
