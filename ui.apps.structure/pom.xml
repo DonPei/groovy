@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ====================================================================== -->
@@ -7,7 +9,7 @@
     <!-- ====================================================================== -->
     <parent>
         <groupId>org.mdanderson.philanthropy</groupId>
-        <artifactId>demo1</artifactId>
+        <artifactId>campaign</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -15,7 +17,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>demo1.ui.apps.structure</artifactId>
+    <artifactId>campaign.ui.apps.structure</artifactId>
     <packaging>content-package</packaging>
     <name>demo 1 - Repository Structure Package</name>
     <description>
@@ -34,20 +36,38 @@
                     </properties>
                     <filters>
                         <!-- /apps root -->
-                        <filter><root>/apps</root></filter>
-                        <filter><root>/apps/demo1</root></filter>
+                        <filter>
+                            <root>/apps</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/campaign</root>
+                        </filter>
                         <!-- Common overlay roots -->
-                                                <filter><root>/apps/sling</root></filter>
-                        <filter><root>/apps/cq</root></filter>
-                        <filter><root>/apps/dam</root></filter>
-                        <filter><root>/apps/wcm</root></filter>
-                        <filter><root>/apps/msm</root></filter>
+                        <filter>
+                            <root>/apps/sling</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/cq</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/dam</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/wcm</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/msm</root>
+                        </filter>
 
                         <!-- Immutable context-aware configurations -->
-                        <filter><root>/apps/settings</root></filter>
+                        <filter>
+                            <root>/apps/settings</root>
+                        </filter>
 
                         <!-- DAM folder root, will be created via repoinit -->
-                        <filter><root>/content/dam/demo1</root></filter>
+                        <filter>
+                            <root>/content/dam/campaign</root>
+                        </filter>
 
                     </filters>
                 </configuration>

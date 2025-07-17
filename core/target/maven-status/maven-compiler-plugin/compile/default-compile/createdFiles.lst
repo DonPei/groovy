@@ -1,0 +1,11 @@
+org/mdanderson/philanthropy/core/filters/LoggingFilter.class
+org/mdanderson/philanthropy/core/schedulers/SimpleScheduledTask$Config.class
+org/mdanderson/philanthropy/core/servlets/SimpleServlet.class
+org/mdanderson/philanthropy/core/models/HelloWorldModel.class
+org/mdanderson/philanthropy/core/schedulers/SimpleScheduledTask.class
+org/mdanderson/philanthropy/core/servlets/package-info.class
+org/mdanderson/philanthropy/core/listeners/package-info.class
+org/mdanderson/philanthropy/core/schedulers/package-info.class
+org/mdanderson/philanthropy/core/filters/package-info.class
+org/mdanderson/philanthropy/core/models/package-info.class
+org/mdanderson/philanthropy/core/listeners/SimpleResourceListener.class

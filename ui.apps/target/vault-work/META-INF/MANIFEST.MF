@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Created-By: Apache Jackrabbit FileVault - Package Maven Plugin 1.3.6
+Build-Jdk-Spec: 11
+Implementation-Title: demo 1 - UI apps
+Implementation-Version: 1.0.0-SNAPSHOT
+Content-Package-Type: application
+Content-Package-Id: org.mdanderson.philanthropy:campaign.ui.apps:1.0.0-S
+ NAPSHOT
+Content-Package-Description: UI apps package for demo 1
+Content-Package-Roots: /apps/demo1/clientlibs,/apps/demo1/components,/ap
+ ps/demo1/i18n
+

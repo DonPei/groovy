@@ -1,175 +1,96 @@
-# Philanthropy Campaign
+# Dispatcher configuration
 
-The project has been designed for **AEM as a Cloud Service** for Philanthropy campaign website.
-Please check the [wiki](http://aoprlaemutil1.mdanderson.edu/philanthropy/campaign/wikis/home) for task/issue workflow.
+This module contains the basic dispatcher configurations. The configuration gets bundled in a ZIP file,
+and can be downloaded and unzipped to a local folder for development.
 
-## Git Feature Workflow Commands
-
-1. Clone the project:
-
-   ```
-   git clone git@aoprlaemutil1.mdanderson.edu/philanthropy/campaign.git
-   ```
-
-   You should be prompted for username and password
-
-2. Change directory to your working folder:
-
-   ```
-   cd ${working_folder}
-   ```
-
-3. Check out the `develop` branch:
-
-   ```
-   git checkout develop
-   ```
-
-4. Check status of branch (should be up-to-date with `'origin/develop'` with nothing to comit, working directory clean):
-
-   ```
-   git status
-   ```
-
-5. Create your feature branch
-
-   Use the below naming convention for your feature branch, and ensure that yor branch is based off the `develop` branch:
-
-   ```
-   git checkout -b [feat]-[JIRA-ID]-[storyname]-[short-description] develop
-   ```
-
-6. Develop the story or fix.
-
-7. Check your changes:
-
-   ```
-   git status
-   ```
-
-   The above command should show all that is modified, use the add command to add it to your local git repo:
-
-   ```
-   git add .
-   ```
-
-8. Commit changes frequently and incrementally, so as to maintain a clear log of what was changed. Always commit your changes with a clear and concise message:
-
-   ```
-   git commit -m "Example message that explains what changes were made."
-   ```
-
-9. Push your local branch to the remote branch:
-
-   ```
-   git push origin [your-feature-branch]
-   ```
-
-10. When your feature or story is complete, with all functionality in place, and not before, merge your feature branch into the `develop` branch. Starting from your feature branch:
-
-    ```
-    git pull origin develop
-    ```
-
-    This will pull and merge the remote `develop` branch into your feature branch to make your branch is up-to-date with all changes in code that have been made during your feature development. Next you will switch to the `develop` branch:
-
-    ```
-    git checkout develop
-    ```
-
-    Now you can merge your feature branch into the `develop` branch:
-
-    ```
-    git merge [your-feature-branch]
-    ```
-
-    Finally, you can push this to the central repository:
-
-    ```
-    git push origin develop
-    ```
-
-## Modules
-
-The main parts of the project are:
-
-- **core**: Java bundle containing all core functionality like OSGi services, listeners or schedulers, as well as component-related Java code such as servlets or request filters.
-- **ui.apps**: contains the /apps (and /etc) parts of the project, ie JS & CSS clientlibs, components, templates, runmode specific configs
-- **ui.content**: contains mutable content (not /apps) that is integral to the running of the site. This include template types, templates, policies, users and base-line organization page and asset structures.
-- **ui.acl**: contains the acl specific configs yaml files
-- **dispatcher.cloud**: contains dispatcher configurations for AEM as a Cloud Service
-- **repository-structure**: Empty package that defines the structure of the Adobe Experience Manager repository the Code packages in this project deploy into.
-- **all**: An empty module that embeds the above sub-modules and any vendor dependencies into a single deployable package.
-
-## How to build
-
-To build all the modules run in the project root directory the following command with Maven 3:
+## File Structure
 
 ```
-mvn clean install
+./
+├── conf.d
+│   ├── available_vhosts
+│   │   └── default.vhost
+│   ├── dispatcher_vhost.conf
+│   ├── enabled_vhosts
+│   │   ├── README
+│   │   └── default.vhost -> ../available_vhosts/default.vhost
+│   └── rewrites
+│   │   ├── default_rewrite.rules
+│   │   └── rewrite.rules
+│   └── variables
+│       └── custom.vars
+└── conf.dispatcher.d
+    ├── available_farms
+    │   └── default.farm
+    ├── cache
+    │   ├── default_invalidate.any
+    │   ├── default_rules.any
+    │   └── rules.any
+    ├── clientheaders
+    │   ├── clientheaders.any
+    │   └── default_clientheaders.any
+    ├── dispatcher.any
+    ├── enabled_farms
+    │   ├── README
+    │   └── default.farm -> ../available_farms/default.farm
+    ├── filters
+    │   ├── default_filters.any
+    │   └── filters.any
+    ├── renders
+    │   └── default_renders.any
+    └── virtualhosts
+        ├── default_virtualhosts.any
+        └── virtualhosts.any
 ```
 
-If you have a running AEM instance you can build and package the whole project using the `all` module with:
+## Files Explained
+
+- `conf.d/available_vhosts/default.vhost`
+  - `*.vhost` (Virtual Host) files are included from inside the `dispatcher_vhost.conf`. These are `<VirtualHosts>` entries to match host names and allow Apache to handle each domain traffic with different rules. From the `*.vhost` file, other files like rewrites, white listing, etc. will be included. The `available_vhosts` directory is where the `*.vhost` files are stored and `enabled_vhosts` directory is where you enable Virtual Hosts by using a symbolic link from a file in the `available_vhosts` to the `enabled_vhosts` directory.
+
+- `conf.d/rewrites/rewrite.rules`
+  - `rewrite.rules` file is included from inside the `conf.d/enabled_vhosts/*.vhost` files. It has a set of rewrite rules for `mod_rewrite`.
+
+- `conf.d/variables/custom.vars`
+  - `custom.vars` file is included from inside the `conf.d/enabled_vhosts/*.vhost` files. You can put your Apache variables in there.
+
+- `conf.dispatcher.d/available_farms/<CUSTOMER_CHOICE>.farm`
+  - `*.farm` files are included inside the `conf.dispatcher.d/dispatcher.any` file. These parent farm files exist to control module behavior for each render or website type. Files are created in the `available_farms` directory and enabled with a symbolic link into the `enabled_farms` directory. 
+
+- `conf.dispatcher.d/filters/filters.any`
+  - `filters.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It has a set of rules change what traffic should be filtered out and not make it to the backend.
+
+- `conf.dispatcher.d/virtualhosts/virtualhosts.any`
+  - `virtualhosts.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It has a list of host names or URI paths to be matched by blob matching to determine which backend to use to serve that request.
+
+- `conf.dispatcher.d/cache/rules.any`
+  - `rules.any` file is included from inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It specifies caching preferences.
+
+- `conf.dispatcher.d/clientheaders.any`
+  - `clientheaders.any` file is included inside the `conf.dispatcher.d/enabled_farms/*.farm` files. It specifies which client headers should be passed through to each renderer.
+
+## Environment Variables
+
+- `CONTENT_FOLDER_NAME`
+  - This is the customer's content folder in the repository. This is used in the `customer_rewrite.rules` to map shortened URLs to their correct repository path.  
+
+## Immutable Configuration Files
+
+Some files are immutable, meaning they cannot be altered or deleted.  These are part of the base framework and enforce standards and best practices.  When customization is needed, copies of immutable files (i.e. `default.vhost` -> `publish.vhost`) can be used to modify the behavior.  Where possible, be sure to retain includes of immutable files unless customization of included files is also needed.
+
+### Immutable Files
 
 ```
-mvn clean install -PautoInstallSinglePackage
+conf.d/available_vhosts/default.vhost
+conf.d/dispatcher_vhost.conf
+conf.d/rewrites/default_rewrite.rules
+conf.dispatcher.d/available_farms/default.farm
+conf.dispatcher.d/cache/default_invalidate.any
+conf.dispatcher.d/cache/default_rules.any
+conf.dispatcher.d/clientheaders/default_clientheaders.any
+conf.dispatcher.d/dispatcher.any
+conf.dispatcher.d/enabled_farms/default.farm
+conf.dispatcher.d/filters/default_filters.any
+conf.dispatcher.d/renders/default_renders.any
+conf.dispatcher.d/virtualhosts/default_virtualhosts.any
 ```
-
-Depending on your maven configuration, you may find it helpful to force the resolution of the Adobe public repo with
-
-```
-mvn clean install -PautoInstallSinglePackage -Padobe-public
-```
-
-Or to deploy it to a publish instance, run
-
-```
-mvn clean install -PautoInstallSinglePackagePublish
-```
-
-Or alternatively
-
-```
-mvn clean install -PautoInstallSinglePackage -Daem.port=4503
-```
-
-Or to deploy only `ui.apps` to the author, run
-
-```
-cd ui.apps
-mvn clean install-PautoInstallPackage
-```
-
-Or to deploy only the bundle to the author, run
-
-```
-cd core
-mvn clean install -PautoInstallBundle
-```
-
-## Testing
-
-There are three levels of testing contained in the project:
-
-unit test in core: this show-cases classic unit testing of the code contained in the bundle. To test, execute:
-
-```
-mvn clean test
-```
-
-### TO DO
-
-- Junit test cases
-- More custom component examples
-
-## Reference Content
-
-This contains pages created using core components(v2.10.0) and basic styling to demonstrate how to use CSS and AEM style system to setup a basic site using core components.
-
-Sample pages are at [https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content](https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content)
-
-**Example**
-
-[https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content/embed](https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content/embed)
-
-![embed core component reference content](https://github.com/arunpatidar02/aemaacs-aemlab/blob/master/embed.png)

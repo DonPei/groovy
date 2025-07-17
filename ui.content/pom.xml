@@ -14,7 +14,9 @@
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ====================================================================== -->
@@ -22,7 +24,7 @@
     <!-- ====================================================================== -->
     <parent>
         <groupId>org.mdanderson.philanthropy</groupId>
-        <artifactId>demo1</artifactId>
+        <artifactId>campaign</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -30,7 +32,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>demo1.ui.content</artifactId>
+    <artifactId>campaign.ui.content</artifactId>
     <packaging>content-package</packaging>
     <name>demo 1 - UI content</name>
     <description>UI content package for demo 1</description>
@@ -51,20 +53,21 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <group>org.mdanderson.philanthropy</group>
-                    <name>demo1.ui.content</name>
+                    <name>campaign.ui.content</name>
                     <packageType>content</packageType>
                     <accessControlHandling>merge</accessControlHandling>
                     <validatorsSettings>
                         <jackrabbit-filter>
                             <options>
-                                <validRoots>/conf,/content,/content/experience-fragments,/content/dam</validRoots>
+                                <validRoots>
+                                    /conf,/content,/content/experience-fragments,/content/dam</validRoots>
                             </options>
                         </jackrabbit-filter>
                     </validatorsSettings>
                     <dependencies>
                         <dependency>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.ui.apps</artifactId>
+                            <artifactId>campaign.ui.apps</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
@@ -88,12 +91,12 @@
     <dependencies>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.core</artifactId>
+            <artifactId>campaign.core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.ui.apps</artifactId>
+            <artifactId>campaign.ui.apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
