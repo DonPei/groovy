@@ -4,7 +4,7 @@
 <comment>philanthropy campaign website - Repository Structure Package</comment>
 <entry key="cloudManagerTarget">none</entry>
 <entry key="allowIndexDefinitions">false</entry>
-<entry key="created">2025-07-17T21:38:51.333Z</entry>
+<entry key="created">2025-07-17T22:04:59.384Z</entry>
 <entry key="groupId">org.mdanderson.philanthropy</entry>
 <entry key="name">campaign.ui.apps.structure</entry>
 <entry key="description">Empty package that defines the structure of the Adobe Experience Manager repository the Code packages in this project deploy into.
