@@ -32,6 +32,7 @@ mvn:deploy_artifactory:
   dependencies:
     - mvn:build
   script:
+    - echo "Start to deploy development to Artifactory."
     - mvn $MAVEN_CLI_OPTS $MVN_OPTS deploy
     - echo "Deployed successfully to Artifactory."
   rules:
