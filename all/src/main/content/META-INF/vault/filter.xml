@@ -15,6 +15,6 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <workspaceFilter version="1.0">
-    <filter root="/apps/demo1-packages"/>
-    <filter root="/apps/demo1-vendor-packages"/>
+    <filter root="/apps/campaign-packages"/>
+    <filter root="/apps/campaign-vendor-packages"/>
 </workspaceFilter>

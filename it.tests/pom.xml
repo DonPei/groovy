@@ -19,14 +19,14 @@
 
     <parent>
         <groupId>org.mdanderson.philanthropy</groupId>
-        <artifactId>demo1</artifactId>
+        <artifactId>campaign</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>demo1.it.tests</artifactId>
-    <name>demo 1 - Integration Tests</name>
-    <description>Integration Tests for demo 1</description>
+    <artifactId>campaign.it.tests</artifactId>
+    <name>philanthropy campaign website - Integration Tests</name>
+    <description>Integration Tests for philanthropy campaign website</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

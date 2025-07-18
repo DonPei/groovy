@@ -22,7 +22,7 @@
     <!-- ====================================================================== -->
     <parent>
         <groupId>org.mdanderson.philanthropy</groupId>
-        <artifactId>demo1</artifactId>
+        <artifactId>campaign</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -30,10 +30,10 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>demo1.ui.config</artifactId>
+    <artifactId>campaign.ui.config</artifactId>
     <packaging>content-package</packaging>
-    <name>demo 1 - UI config</name>
-    <description>UI config package for demo 1</description>
+    <name>philanthropy campaign website - UI config</name>
+    <description>UI config package for philanthropy campaign website</description>
 
     <!-- ====================================================================== -->
     <!-- B U I L D   D E F I N I T I O N                                        -->
@@ -54,7 +54,7 @@
                     <repositoryStructurePackages>
                         <repositoryStructurePackage>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.ui.apps.structure</artifactId>
+                            <artifactId>campaign.ui.apps.structure</artifactId>
                         </repositoryStructurePackage>
                     </repositoryStructurePackages>
                 </configuration>
@@ -69,7 +69,7 @@
     <dependencies>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.ui.apps.structure</artifactId>
+            <artifactId>campaign.ui.apps.structure</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>

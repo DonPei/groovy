@@ -23,7 +23,7 @@
     <!-- ====================================================================== -->
     <parent>
         <groupId>org.mdanderson.philanthropy</groupId>
-        <artifactId>demo1</artifactId>
+        <artifactId>campaign</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -31,10 +31,10 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>demo1.all</artifactId>
+    <artifactId>campaign.all</artifactId>
     <packaging>content-package</packaging>
-    <name>demo 1 - All</name>
-    <description>All content package for demo 1</description>
+    <name>philanthropy campaign website - All</name>
+    <description>All content package for philanthropy campaign website</description>
 
     <!-- ====================================================================== -->
     <!-- B U I L D   D E F I N I T I O N                                        -->
@@ -56,26 +56,26 @@
                     <embeddeds>
                         <embedded>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.ui.apps</artifactId>
+                            <artifactId>campaign.ui.apps</artifactId>
                             <type>zip</type>
-                            <target>/apps/demo1-packages/application/install</target>
+                            <target>/apps/campaign-packages/application/install</target>
                         </embedded>
                         <embedded>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.core</artifactId>
-                            <target>/apps/demo1-packages/application/install</target>
+                            <artifactId>campaign.core</artifactId>
+                            <target>/apps/campaign-packages/application/install</target>
                         </embedded>
                         <embedded>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.ui.content</artifactId>
+                            <artifactId>campaign.ui.content</artifactId>
                             <type>zip</type>
-                            <target>/apps/demo1-packages/content/install</target>
+                            <target>/apps/campaign-packages/content/install</target>
                         </embedded>
                         <embedded>
                             <groupId>org.mdanderson.philanthropy</groupId>
-                            <artifactId>demo1.ui.config</artifactId>
+                            <artifactId>campaign.ui.config</artifactId>
                             <type>zip</type>
-                            <target>/apps/demo1-packages/application/install</target>
+                            <target>/apps/campaign-packages/application/install</target>
                         </embedded>
                     </embeddeds>
                 </configuration>
@@ -180,19 +180,19 @@
     <dependencies>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.ui.apps</artifactId>
+            <artifactId>campaign.ui.apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.ui.content</artifactId>
+            <artifactId>campaign.ui.content</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>org.mdanderson.philanthropy</groupId>
-            <artifactId>demo1.ui.config</artifactId>
+            <artifactId>campaign.ui.config</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>

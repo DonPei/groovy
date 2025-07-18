@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <filter root="/conf/demo1" mode="merge"/>
-    <filter root="/content/demo1" mode="merge"/>
-    <filter root="/content/dam/demo1" mode="merge">
-        <exclude pattern="/content/dam/demo1(/.*)?"/>
-        <include pattern="/content/dam/demo1/jcr:content(/.*)?"/>
+    <filter root="/conf/campaign" mode="merge"/>
+    <filter root="/content/campaign" mode="merge"/>
+    <filter root="/content/dam/campaign" mode="merge">
+        <exclude pattern="/content/dam/campaign(/.*)?"/>
+        <include pattern="/content/dam/campaign/jcr:content(/.*)?"/>
     </filter>
-    <filter root="/content/dam/demo1/asset.jpg" mode="merge"/>
-    <filter root="/content/experience-fragments/demo1" mode="merge"/>
+    <filter root="/content/dam/campaign/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/campaign" mode="merge"/>
 </workspaceFilter>
