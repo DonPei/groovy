@@ -1,123 +1,175 @@
-# Sample AEM project template
+# Philanthropy Campaign
 
-This is a project template for AEM-based applications. It is intended as a best-practice set of examples as well as a potential starting point to develop your own functionality.
+The project has been designed for **AEM as a Cloud Service** for Philanthropy campaign website.
+Please check the [wiki](http://aoprlaemutil1.mdanderson.edu/philanthropy/campaign/wikis/home) for task/issue workflow.
+
+## Git Feature Workflow Commands
+
+1. Clone the project:
+
+   ```
+   git clone git@aoprlaemutil1.mdanderson.edu/philanthropy/campaign.git
+   ```
+
+   You should be prompted for username and password
+
+2. Change directory to your working folder:
+
+   ```
+   cd ${working_folder}
+   ```
+
+3. Check out the `develop` branch:
+
+   ```
+   git checkout develop
+   ```
+
+4. Check status of branch (should be up-to-date with `'origin/develop'` with nothing to comit, working directory clean):
+
+   ```
+   git status
+   ```
+
+5. Create your feature branch
+
+   Use the below naming convention for your feature branch, and ensure that yor branch is based off the `develop` branch:
+
+   ```
+   git checkout -b [feat]-[JIRA-ID]-[storyname]-[short-description] develop
+   ```
+
+6. Develop the story or fix.
+
+7. Check your changes:
+
+   ```
+   git status
+   ```
+
+   The above command should show all that is modified, use the add command to add it to your local git repo:
+
+   ```
+   git add .
+   ```
+
+8. Commit changes frequently and incrementally, so as to maintain a clear log of what was changed. Always commit your changes with a clear and concise message:
+
+   ```
+   git commit -m "Example message that explains what changes were made."
+   ```
+
+9. Push your local branch to the remote branch:
+
+   ```
+   git push origin [your-feature-branch]
+   ```
+
+10. When your feature or story is complete, with all functionality in place, and not before, merge your feature branch into the `develop` branch. Starting from your feature branch:
+
+    ```
+    git pull origin develop
+    ```
+
+    This will pull and merge the remote `develop` branch into your feature branch to make your branch is up-to-date with all changes in code that have been made during your feature development. Next you will switch to the `develop` branch:
+
+    ```
+    git checkout develop
+    ```
+
+    Now you can merge your feature branch into the `develop` branch:
+
+    ```
+    git merge [your-feature-branch]
+    ```
+
+    Finally, you can push this to the central repository:
+
+    ```
+    git push origin develop
+    ```
 
 ## Modules
 
-The main parts of the template are:
+The main parts of the project are:
 
-* [core:](core/README.md) Java bundle containing all core functionality like OSGi services, listeners or schedulers, as well as component-related Java code such as servlets or request filters.
-* [it.tests:](it.tests/README.md) Java based integration tests
-* [ui.apps:](ui.apps/README.md) contains the /apps (and /etc) parts of the project, ie JS&CSS clientlibs, components, and templates
-* [ui.content:](ui.content/README.md) contains sample content using the components from the ui.apps
-* ui.config: contains runmode specific OSGi configs for the project
-* [ui.frontend:](ui.frontend.general/README.md) an optional dedicated front-end build mechanism (Angular, React or general Webpack project)
-* [ui.tests.cypress:](ui.tests.cypress/README.md) Cypress based UI tests
-* [ui.tests.wdio:](ui.tests.wdio/README.md) Selenium based UI tests
-* all: a single content package that embeds all of the compiled modules (bundles and content packages) including any vendor dependencies
-* analyse: this module runs analysis on the project which provides additional validation for deploying into AEMaaCS
+- **core**: Java bundle containing all core functionality like OSGi services, listeners or schedulers, as well as component-related Java code such as servlets or request filters.
+- **ui.apps**: contains the /apps (and /etc) parts of the project, ie JS & CSS clientlibs, components, templates, runmode specific configs
+- **ui.content**: contains mutable content (not /apps) that is integral to the running of the site. This include template types, templates, policies, users and base-line organization page and asset structures.
+- **ui.acl**: contains the acl specific configs yaml files
+- **dispatcher.cloud**: contains dispatcher configurations for AEM as a Cloud Service
+- **repository-structure**: Empty package that defines the structure of the Adobe Experience Manager repository the Code packages in this project deploy into.
+- **all**: An empty module that embeds the above sub-modules and any vendor dependencies into a single deployable package.
 
 ## How to build
 
 To build all the modules run in the project root directory the following command with Maven 3:
 
-    mvn clean install
+```
+mvn clean install
+```
 
-To build all the modules and deploy the `all` package to a local instance of AEM, run in the project root directory the following command:
+If you have a running AEM instance you can build and package the whole project using the `all` module with:
 
-    mvn clean install -PautoInstallSinglePackage
+```
+mvn clean install -PautoInstallSinglePackage
+```
+
+Depending on your maven configuration, you may find it helpful to force the resolution of the Adobe public repo with
+
+```
+mvn clean install -PautoInstallSinglePackage -Padobe-public
+```
 
 Or to deploy it to a publish instance, run
 
-    mvn clean install -PautoInstallSinglePackagePublish
+```
+mvn clean install -PautoInstallSinglePackagePublish
+```
 
 Or alternatively
 
-    mvn clean install -PautoInstallSinglePackage -Daem.port=4503
+```
+mvn clean install -PautoInstallSinglePackage -Daem.port=4503
+```
+
+Or to deploy only `ui.apps` to the author, run
+
+```
+cd ui.apps
+mvn clean install-PautoInstallPackage
+```
 
 Or to deploy only the bundle to the author, run
 
-    mvn clean install -PautoInstallBundle
-
-Or to deploy only a single content package, run in the sub-module directory (i.e `ui.apps`)
-
-    mvn clean install -PautoInstallPackage
-
-## Documentation
-
-The build process also generates documentation in the form of README.md files in each module directory for easy reference. Depending on the options you select at build time, the content may be customized to your project.
+```
+cd core
+mvn clean install -PautoInstallBundle
+```
 
 ## Testing
 
 There are three levels of testing contained in the project:
 
-### Unit tests
+unit test in core: this show-cases classic unit testing of the code contained in the bundle. To test, execute:
 
-This show-cases classic unit testing of the code contained in the bundle. To
-test, execute:
+```
+mvn clean test
+```
 
-    mvn clean test
+### TO DO
 
-### Integration tests
+- Junit test cases
+- More custom component examples
 
-This allows running integration tests that exercise the capabilities of AEM via
-HTTP calls to its API. To run the integration tests, run:
+## Reference Content
 
-    mvn clean verify -Plocal
+This contains pages created using core components(v2.10.0) and basic styling to demonstrate how to use CSS and AEM style system to setup a basic site using core components.
 
-Test classes must be saved in the `src/main/java` directory (or any of its
-subdirectories), and must be contained in files matching the pattern `*IT.java`.
+Sample pages are at [https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content](https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content)
 
-The configuration provides sensible defaults for a typical local installation of
-AEM. If you want to point the integration tests to different AEM author and
-publish instances, you can use the following system properties via Maven's `-D`
-flag.
+**Example**
 
-| Property | Description | Default value |
-| --- | --- | --- |
-| `it.author.url` | URL of the author instance | `http://localhost:4502` |
-| `it.author.user` | Admin user for the author instance | `admin` |
-| `it.author.password` | Password of the admin user for the author instance | `admin` |
-| `it.publish.url` | URL of the publish instance | `http://localhost:4503` |
-| `it.publish.user` | Admin user for the publish instance | `admin` |
-| `it.publish.password` | Password of the admin user for the publish instance | `admin` |
+[https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content/embed](https://github.com/arunpatidar02/aemaacs-aemlab/tree/master/ui.content/src/main/content/jcr_root/content/aemlab/oneweb/reference-content/embed)
 
-The integration tests in this archetype use the [AEM Testing
-Clients](https://github.com/adobe/aem-testing-clients) and showcase some
-recommended [best
-practices](https://github.com/adobe/aem-testing-clients/wiki/Best-practices) to
-be put in use when writing integration tests for AEM.
-
-## Static Analysis
-
-The `analyse` module performs static analysis on the project for deploying into AEMaaCS. It is automatically
-run when executing
-
-    mvn clean install
-
-from the project root directory. Additional information about this analysis and how to further configure it
-can be found here https://github.com/adobe/aemanalyser-maven-plugin
-
-### UI tests
-
-They will test the UI layer of your AEM application using either Cypress or Selenium technology.
-
-Check README file in `ui.tests.cypress` or `ui.tests.wdio` module for more details.
-
-## ClientLibs
-
-The frontend module is made available using an [AEM ClientLib](https://helpx.adobe.com/experience-manager/6-5/sites/developing/using/clientlibs.html). When executing the NPM build script, the app is built and the [`aem-clientlib-generator`](https://github.com/wcm-io-frontend/aem-clientlib-generator) package takes the resulting build output and transforms it into such a ClientLib.
-
-A ClientLib will consist of the following files and directories:
-
-- `css/`: CSS files which can be requested in the HTML
-- `css.txt` (tells AEM the order and names of files in `css/` so they can be merged)
-- `js/`: JavaScript files which can be requested in the HTML
-- `js.txt` (tells AEM the order and names of files in `js/` so they can be merged
-- `resources/`: Source maps, non-entrypoint code chunks (resulting from code splitting), static assets (e.g. icons), etc.
-
-## Maven settings
-
-The project comes with the auto-public repository configured. To setup the repository in your Maven settings, refer to:
-
-    http://helpx.adobe.com/experience-manager/kb/SetUpTheAdobeMavenRepository.html
+![embed core component reference content](https://github.com/arunpatidar02/aemaacs-aemlab/blob/master/embed.png)
