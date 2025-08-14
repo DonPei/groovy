@@ -1,0 +1,17 @@
+name: Run Script Example
+
+on: [push] # Trigger on every push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Or other suitable runner (e.g., windows-latest, macos-latest)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make script executable
+        run: chmod +x ./scripts/my_script.sh
+
+      - name: Run my script
+        run: ./scripts/my_script.sh
