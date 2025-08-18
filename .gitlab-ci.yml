@@ -9,6 +9,7 @@ variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -noverify"
   RD_TOKEN: $RD_TOKEN
+  ADOBE_GIT_REPO_URL: "github.com/DonPei/groovy.git"
 
 cache:
   paths:
@@ -16,7 +17,7 @@ cache:
     - target/
 
 stages:
-  - sync2
+  - sync
   - build
   - deploy_artifactory
   - sync1
@@ -28,22 +29,54 @@ sync_to_github:
   script:
     - git config --global user.email "donghongpei@gmail.com"
     - git config --global user.name "DonPei"
-    - git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/DonPei/groovy.git" # Replace with your GitHub repo URL
+    - git remote add github "https://oauth2:${GITHUB_TOKEN}@$ADOBE_GIT_REPO_URL"
     - git push --force github HEAD:main # Adjust 'main' to your desired branch
   only:
     - main # Or the branch you want to trigger the sync from
 
-sync_to_AEMaaCS:
-  stage: sync2
+sync_to_adobe_cloud:
+  stage: sync
   script:
     - git config --global user.email "dpei1@mdanderson.org"
     - git config --global user.name "d-pei1-mdanderson-org"
-    - git remote add adobe https://${CLOUD_USER}:${CLOUD_PASSWORD}@git.cloudmanager.adobe.com/mdanderson/campaign/
+    - git remote add adobe https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@git.cloudmanager.adobe.com/mdanderson/campaign/
+
     - git fetch adobe
-    - git rebase adobe/main
-    - git push adobe HEAD:main
-  only:
-    - main # Or the branch you want to trigger the sync from
+    - |
+      if [ $CI_COMMIT_REF_NAME == "release" ]; then
+        git checkout main
+        git rebase adobe/main || (echo "Conflict during rebase. Manual resolution required." && exit 1)
+      else
+        git checkout $CI_COMMIT_REF_NAME
+        git rebase adobe/$CI_COMMIT_REF_NAME || (echo "Conflict during rebase. Manual resolution required." && exit 1)
+      fi
+
+    # Push to Adobe
+    - |
+      if [ -n "$CI_COMMIT_TAG" ]; then
+        echo "Syncing tag $CI_COMMIT_TAG to Adobe..."
+        git push adobe $CI_COMMIT_TAG
+      elif [ $CI_COMMIT_REF_NAME == "release" ]; then
+        git push adobe HEAD:main
+      else
+        git push adobe HEAD:$CI_COMMIT_REF_NAME
+      fi
+
+  rules:
+    # Branch rules
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "release"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH =~ /^feature\/.*$/'
+      when: always
+
+    # Tag rule
+    - if: "$CI_COMMIT_TAG"
+      when: always
+
+    # Default: skip other cases
+    - when: never
 
 mvn:build:
   stage: build
