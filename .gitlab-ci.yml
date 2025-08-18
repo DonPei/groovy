@@ -42,6 +42,7 @@ sync_to_adobe_cloud:
     - git config --global user.name "d-pei1-mdanderson-org"
     - git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
     - git remote -v
+
     # Fetch Adobe tags
     - git fetch --tags
     - git branch
@@ -65,7 +66,7 @@ sync_to_adobe_cloud:
         git push adobe $CI_COMMIT_TAG
       else
         BRANCH=$CI_COMMIT_REF_NAME
-        echo "Detected branch: $BRANCH"
+        echo "The current branch: $BRANCH"
 
         # Check if branch exists on Adobe
         if git ls-remote --heads adobe $BRANCH | grep $BRANCH; then
@@ -134,6 +135,8 @@ sync_to_adobe_cloud2:
 
   rules:
     # Branch rules
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: always
     - if: '$CI_COMMIT_BRANCH == "release"'
