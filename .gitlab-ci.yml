@@ -44,6 +44,7 @@ sync_to_adobe_cloud:
 
     # Fetch Adobe tags
     - git fetch --tags
+    - git fetch adobe
 
     # Determine if this is a tag or branch
     - |
@@ -68,7 +69,6 @@ sync_to_adobe_cloud:
 
         # Check if branch exists on Adobe
         if git ls-remote --heads adobe $BRANCH | grep $BRANCH; then
-          git fetch adobe
           echo "Adobe branch '$BRANCH' exists. Rebasing..."
           git checkout $BRANCH
           git rebase adobe/$BRANCH || (echo "Conflict detected. Manual resolution required." && exit 1)
@@ -76,7 +76,7 @@ sync_to_adobe_cloud:
         else
           echo "Adobe branch '$BRANCH' does not exist. Creating it..."
           git checkout $BRANCH || git checkout -b $BRANCH origin/$BRANCH
-          git push adobe $BRANCH:$BRANCH
+          git push --set-upstream adobe $BRANCH
         fi
 
         # Push branch to Adobe
