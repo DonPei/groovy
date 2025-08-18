@@ -18,12 +18,10 @@ cache:
 
 stages:
   - sync
-  - build
-  - deploy_artifactory
   - sync1
   - sync2
 
-sync_to_github:
+sync_to_github1:
   stage: sync1
   #image: alpine/git # Use an image with Git pre-installed
   #before_script:
@@ -40,7 +38,7 @@ sync_to_adobe_cloud:
   script:
     - git config --global user.email "dpei1@mdanderson.org"
     - git config --global user.name "d-pei1-mdanderson-org"
-    - git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
+    - git remote add adobe "https://$CM_SYNC_USER_NAME:$CM_SYNC_USER_ACCESS_TOKEN@$ADOBE_GIT_REPO_URL"
     - git remote -v
 
     # Fetch Adobe tags
@@ -150,27 +148,3 @@ sync_to_adobe_cloud2:
 
     # Default: skip other cases
     - when: never
-
-mvn:build:
-  stage: build
-  script:
-    - echo "Maven snapshot build started now."
-    - mvn $MAVEN_CLI_OPTS $MVN_OPTS package
-    - echo "Maven snapshot build completed."
-
-mvn:deploy_artifactory:
-  stage: deploy_artifactory
-  environment: develop
-  dependencies:
-    - mvn:build
-  script:
-    - echo "Start to deploy development to Artifactory."
-    - mvn $MAVEN_CLI_OPTS $MVN_OPTS deploy
-    - echo "Deployed successfully to Artifactory."
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "develop"'
-      when: manual
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: manual
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: manual
