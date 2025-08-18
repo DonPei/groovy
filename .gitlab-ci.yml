@@ -76,6 +76,7 @@ sync_to_adobe_cloud:
         else
           echo "Adobe branch '$BRANCH' does not exist. Creating it..."
           git checkout $BRANCH || git checkout -b $BRANCH origin/$BRANCH
+          git remote remove adobe
           git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
           git remote -v
           git branch
