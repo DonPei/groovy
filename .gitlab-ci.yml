@@ -9,7 +9,7 @@ variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -noverify"
   RD_TOKEN: $RD_TOKEN
-  ADOBE_GIT_REPO_URL: "github.com/DonPei/groovy.git"
+  ADOBE_GIT_REPO_URL: "git.cloudmanager.adobe.com/mdanderson/campaign/"
 
 cache:
   paths:
@@ -21,6 +21,7 @@ stages:
   - build
   - deploy_artifactory
   - sync1
+  - sync2
 
 sync_to_github:
   stage: sync1
@@ -29,13 +30,49 @@ sync_to_github:
   script:
     - git config --global user.email "donghongpei@gmail.com"
     - git config --global user.name "DonPei"
-    - git remote add github "https://oauth2:${GITHUB_TOKEN}@$ADOBE_GIT_REPO_URL"
+    - git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/DonPei/groovy.git"
     - git push --force github HEAD:main # Adjust 'main' to your desired branch
   only:
     - main # Or the branch you want to trigger the sync from
 
 sync_to_adobe_cloud:
   stage: sync
+  script:
+    - git config --global user.email "dpei1@mdanderson.org"
+    - git config --global user.name "d-pei1-mdanderson-org"
+    - git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
+
+    - git fetch adobe
+    - git checkout $CI_COMMIT_REF_NAME
+    - git git rebase adobe/main || (echo "Conflict during rebase. Manual resolution required." && exit 1)
+
+    # Push to Adobe
+    - |
+      if [ -n "$CI_COMMIT_TAG" ]; then
+        echo "Syncing tag $CI_COMMIT_TAG to Adobe..."
+        git push adobe $CI_COMMIT_TAG
+      else
+        git push adobe HEAD:$CI_COMMIT_REF_NAME
+      fi
+
+  rules:
+    # Branch rules
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "release"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH =~ /^feature\/.*$/'
+      when: always
+
+    # Tag rule
+    - if: "$CI_COMMIT_TAG"
+      when: always
+
+    # Default: skip other cases
+    - when: never
+
+sync_to_adobe_cloud2:
+  stage: sync2
   script:
     - git config --global user.email "dpei1@mdanderson.org"
     - git config --global user.name "d-pei1-mdanderson-org"
