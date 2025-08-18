@@ -18,6 +18,19 @@ cache:
 stages:
   - build
   - deploy_artifactory
+  - sync
+
+sync_to_github:
+  stage: sync
+  image: alpine/git # Use an image with Git pre-installed
+  before_script:
+    - git config --global user.email "donghongpei@gmail.com"
+    - git config --global user.name "DonPei"
+  script:
+    - git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/DonPei/groovy.git" # Replace with your GitHub repo URL
+    - git push --force github HEAD:main # Adjust 'main' to your desired branch
+  only:
+    - main # Or the branch you want to trigger the sync from
 
 mvn:build:
   stage: build
