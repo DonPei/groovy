@@ -40,7 +40,9 @@ sync_to_AEMaaCS:
     - git config --global user.name "d-pei1-mdanderson-org"
     - git remote add adobe https://${CLOUD_USER}:${CLOUD_PASSWORD}@git.cloudmanager.adobe.com/mdanderson/campaign/
     - git fetch --all
+    - git pull adobe main
     - git push adobe main
+    - git push origin main
   only:
     - main # Or the branch you want to trigger the sync from
 
