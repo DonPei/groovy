@@ -72,13 +72,15 @@ sync_to_adobe_cloud:
           echo "Adobe branch '$BRANCH' exists. Rebasing..."
           git checkout $BRANCH
           git rebase adobe/$BRANCH || (echo "Conflict detected. Manual resolution required." && exit 1)
+          git push adobe $BRANCH
         else
           echo "Adobe branch '$BRANCH' does not exist. Creating it..."
-          git checkout $BRANCH
+          git checkout $BRANCH || git checkout -b $BRANCH origin/$BRANCH
+          git push adobe $BRANCH:$BRANCH
         fi
 
         # Push branch to Adobe
-        git push adobe $BRANCH
+        
       fi
   rules:
     # Branch rules
