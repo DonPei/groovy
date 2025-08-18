@@ -41,10 +41,10 @@ sync_to_adobe_cloud:
     - git config --global user.email "dpei1@mdanderson.org"
     - git config --global user.name "d-pei1-mdanderson-org"
     - git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
-
-    # Fetch Adobe branches and tags
-    - git fetch adobe
+    - git remote -v
+    # Fetch Adobe tags
     - git fetch --tags
+    - git branch
 
     # Determine if this is a tag or branch
     - |
@@ -70,15 +70,23 @@ sync_to_adobe_cloud:
         # Check if branch exists on Adobe
         if git ls-remote --heads adobe $BRANCH | grep $BRANCH; then
           echo "Adobe branch '$BRANCH' exists. Rebasing..."
+          git fetch adobe
           git checkout $BRANCH
           git rebase adobe/$BRANCH || (echo "Conflict detected. Manual resolution required." && exit 1)
+          git push adobe $BRANCH
         else
+          git branch
           echo "Adobe branch '$BRANCH' does not exist. Creating it..."
-          git checkout $BRANCH
+          git checkout $BRANCH || git checkout -b $BRANCH origin/$BRANCH
+          git remote remove adobe
+          git remote add adobe "https://$CM_SYNC_USER_NAME:$CM_SYNC_USER_ACCESS_TOKEN@$ADOBE_GIT_REPO_URL"
+          git remote -v
+          git branch
+          git push --set-upstream adobe $BRANCH
         fi
 
         # Push branch to Adobe
-        git push adobe HEAD:$BRANCH
+        
       fi
   rules:
     # Branch rules

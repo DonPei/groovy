@@ -1,4 +1,4 @@
-# Philanthropy Campaign Sync
+# Philanthropy Campaign Sync Dev
 
 The project has been designed for **AEM as a Cloud Service** for Philanthropy campaign website.
 Please check the [wiki](http://aoprlaemutil1.mdanderson.edu/philanthropy/campaign/wikis/home) for task/issue workflow.
