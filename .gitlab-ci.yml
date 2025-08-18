@@ -19,6 +19,7 @@ stages:
   - sync2
   - build
   - deploy_artifactory
+  - sync1
 
 sync_to_github:
   stage: sync1
@@ -34,15 +35,11 @@ sync_to_github:
 
 sync_to_AEMaaCS:
   stage: sync2
-  #image: alpine/git # Use an image with Git pre-installed
-  #before_script:
   script:
     - git config --global user.email "dpei1@mdanderson.org"
     - git config --global user.name "d-pei1-mdanderson-org"
     - git remote add adobe https://${CLOUD_USER}:${CLOUD_PASSWORD}git.cloudmanager.adobe.com/mdanderson/philanthropy/
-    #- git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/DonPei/groovy.git" # Replace with your GitHub repo URL
     - git push adobe main
-    #- git push --force github HEAD:main # Adjust 'main' to your desired branch
   only:
     - main # Or the branch you want to trigger the sync from
 
