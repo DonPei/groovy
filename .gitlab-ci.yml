@@ -42,19 +42,44 @@ sync_to_adobe_cloud:
     - git config --global user.name "d-pei1-mdanderson-org"
     - git remote add adobe "https://${CM_SYNC_USER_NAME}:${CM_SYNC_USER_ACCESS_TOKEN}@$ADOBE_GIT_REPO_URL"
 
+    # Fetch Adobe branches and tags
     - git fetch adobe
-    - git checkout $CI_COMMIT_REF_NAME
-    - git git rebase adobe/main || (echo "Conflict during rebase. Manual resolution required." && exit 1)
+    - git fetch --tags
 
-    # Push to Adobe
+    # Determine if this is a tag or branch
     - |
       if [ -n "$CI_COMMIT_TAG" ]; then
-        echo "Syncing tag $CI_COMMIT_TAG to Adobe..."
+        echo "Detected tag: $CI_COMMIT_TAG"
+
+        # Get previous tag (if any)
+        PREV_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+
+        # Generate release notes
+        if [ -n "$PREV_TAG" ]; then
+          git log $PREV_TAG..$CI_COMMIT_TAG --pretty=format:"- %s (%an)" > release-notes.txt
+        else
+          git log $CI_COMMIT_TAG --pretty=format:"- %s (%an)" > release-notes.txt
+        fi
+
+        # Push tag to Adobe
         git push adobe $CI_COMMIT_TAG
       else
-        git push adobe HEAD:$CI_COMMIT_REF_NAME
-      fi
+        BRANCH=$CI_COMMIT_REF_NAME
+        echo "Detected branch: $BRANCH"
 
+        # Check if branch exists on Adobe
+        if git ls-remote --heads adobe $BRANCH | grep $BRANCH; then
+          echo "Adobe branch '$BRANCH' exists. Rebasing..."
+          git checkout $BRANCH
+          git rebase adobe/$BRANCH || (echo "Conflict detected. Manual resolution required." && exit 1)
+        else
+          echo "Adobe branch '$BRANCH' does not exist. Creating it..."
+          git checkout $BRANCH
+        fi
+
+        # Push branch to Adobe
+        git push adobe HEAD:$BRANCH
+      fi
   rules:
     # Branch rules
     - if: '$CI_COMMIT_BRANCH == "develop"'
