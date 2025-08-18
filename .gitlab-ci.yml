@@ -78,7 +78,7 @@ sync_to_adobe_cloud:
         fi
 
         # Push branch to Adobe
-        git push adobe HEAD:$BRANCH
+        git push adobe $BRANCH
       fi
   rules:
     # Branch rules
